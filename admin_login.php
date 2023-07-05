@@ -20,34 +20,34 @@
     require('db.php');
     session_start();
     // When form submitted, check and create user session.
-    if (isset($_POST['name'])) {
-        $name = stripslashes($_REQUEST['name']);    // removes backslashes
-        $name = mysqli_real_escape_string($con, $name);
+    if (isset($_POST['username'])) {
+        $username = stripslashes($_REQUEST['username']);    // removes backslashes
+        $username = mysqli_real_escape_string($con, $username);
         $password = stripslashes($_REQUEST['password']);
         $password = mysqli_real_escape_string($con, $password);
         // Check user is exist in the database
-        $query    = "SELECT * FROM `users` WHERE name='$name'
+        $query    = "SELECT * FROM `admin` WHERE username='$username'
                      AND password='" . md5($password) . "'";
         $result = mysqli_query($con, $query) or die(mysql_error());
         $rows = mysqli_num_rows($result);
         if ($rows == 1) {
-            $_SESSION['name'] = $name;
+            $_SESSION['username'] = $username;
             // Redirect to user dashboard page
-            header("Location: dashboard.php");
+            header("Location: admin_dashboard.php");
         } else {
             echo "<div class='form'>
                   <h3>Incorrect Username/password.</h3><br/>
-                  <p class='link'>Click here to <a href='login.php'>Login</a> again.</p>
+                  <p class='link'>Click here to <a href='admin_login.php'>Login</a> again.</p>
                   </div>";
         }
     } else {
 ?>
     <form class="form" method="post" name="login">
         <h3 class="login-title">Login</h3>
-        <input type="text" class="login-input" name="name" placeholder="Username" autofocus="true"/>
+        <input type="text" class="login-input" name="username" placeholder="Username" autofocus="true"/>
         <input type="password" class="login-input" name="password" placeholder="Password"/>
         <input type="submit" value="Login" name="submit" class="login-button"/>
-        <p class="link"><a href="registration.php">Create Account</a></p>
+        <p class="link"><a href="admin_register.php">Create Account</a></p>
   </form>
 <?php
     }
@@ -68,3 +68,7 @@ A lawyer without history or literature is a mechanic, a mere working mason; if h
     </script>
 </body>
 </html>
+
+
+
+

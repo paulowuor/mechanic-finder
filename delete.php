@@ -8,7 +8,7 @@ $query="DELETE FROM users WHERE id='$id'";
 $query_run=mysqli_query($con,$query);
 if ($query_run) {
 echo '<script> alert("Data Deleted"); </script>';
-header("location:farmerreport.php");
+header("location:registration.php");
 }
 else{
 echo '<script> alert("Data Not Deleted"); </script>';

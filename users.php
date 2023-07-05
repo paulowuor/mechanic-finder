@@ -101,10 +101,11 @@
       margin-left: 90%;
       background-color: green;
     }
-    .profile-update{
-       margin-left: 1%;
-      margin-right: 60%;
+    .users{
+      margin-left: 30%;
+      margin-right: 30%;
     }
+
   </style>
 </head>
 
@@ -113,19 +114,20 @@
    <div class="form">
         <div class="profile">
         <p class="dashboard-text">Hey, <?php echo $_SESSION['username']; ?>!</p>
-        <p class="dashboard-link"><a href="login.php">Logout</a></p>
+        <p class="dashboard-link"><a href="admin_login.php">Logout</a></p>
        </div>
        
         <!-- User Features -->
-        <h2 class="dashboard-subtitle" style="color:white;">User Dashboard</h2>
+        <h2 class="dashboard-subtitle" style="color:white;">Admin Dashboard</h2>
         <ul class="dashboard-list">
             
-            <li><a href="update_profile.php">Update profile information</a></li>
+            
                   
         </ul>
         
         
     </div>
+     <div class="users">
     <?php
   $sql = "SELECT * FROM users";
   $query_run = mysqli_query($con, $sql);
@@ -134,7 +136,7 @@
 
 <!-- display the search form and the table of users -->
 
-<table border="1" class="profile-update" style="background-color: white;">
+<table border="1" class="table table-bordered" style="background-color: white;">
   <thead class="table-dark">
     <tr>
       <th>username</th>
@@ -147,6 +149,7 @@
     </tr>
   </thead>
   <tbody>
+   
     <?php
     if (mysqli_num_rows($query_run) > 0) {
       while ($row = mysqli_fetch_array($query_run)) {
@@ -180,7 +183,7 @@
     ?>
   </tbody>
 </table>
-
+</div>
   <footer class="footer">
     <h6 style="text-align: center;">The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
 A lawyer without history or literature is a mechanic, a mere working mason; if he possesses some knowledge of these, he may venture to call himself an architect.</h6>

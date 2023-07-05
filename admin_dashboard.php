@@ -101,10 +101,7 @@
       margin-left: 90%;
       background-color: green;
     }
-    .profile-update{
-       margin-left: 1%;
-      margin-right: 60%;
-    }
+    
   </style>
 </head>
 
@@ -113,74 +110,22 @@
    <div class="form">
         <div class="profile">
         <p class="dashboard-text">Hey, <?php echo $_SESSION['username']; ?>!</p>
-        <p class="dashboard-link"><a href="login.php">Logout</a></p>
+        <p class="dashboard-link"><a href="admin_login.php">Logout</a></p>
        </div>
-       
+       <div class="sidebar">
         <!-- User Features -->
-        <h2 class="dashboard-subtitle" style="color:white;">User Dashboard</h2>
+        <h2 class="dashboard-subtitle" style="color:white;">Admin Dashboard</h2>
         <ul class="dashboard-list">
             
-            <li><a href="update_profile.php">Update profile information</a></li>
-                  
+            <li><a href="users.php">View Registered Users</a></li>
+
+            <li><a href="mechanic.php">Add Mechanics here</a></li>
+              </div>    
         </ul>
         
         
     </div>
-    <?php
-  $sql = "SELECT * FROM users";
-  $query_run = mysqli_query($con, $sql);
-
-?>
-
-<!-- display the search form and the table of users -->
-
-<table border="1" class="profile-update" style="background-color: white;">
-  <thead class="table-dark">
-    <tr>
-      <th>username</th>
-      <th>email</th>
-    
-     
-      
-      <th>Edit information</th>
-      <th>Delete Account</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php
-    if (mysqli_num_rows($query_run) > 0) {
-      while ($row = mysqli_fetch_array($query_run)) {
-    ?>
-        <tr>
-          <td><?php echo $row['name']; ?></td>
-          <td><?php echo $row['email']; ?></td>
-          
-        
-        
-          <td>
-            <form action="update.php" method="POST">
-              <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-              <input type="submit" name="update" class="btn btn-success" value="EDIT">
-            </form>
-          </td>
-          <td>
-            <form action="delete.php" method="POST">
-              <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-              <input type="submit" name="delete" class="btn btn-danger" value="DELETE">
-            </form>
-          </td>
-        </tr>
-    <?php
-      }
-    }
-    else {
-      // display a message if no records found
-      echo "<tr><td colspan='7'>No record found</td></tr>";
-    }
-    ?>
-  </tbody>
-</table>
-
+  
   <footer class="footer">
     <h6 style="text-align: center;">The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
 A lawyer without history or literature is a mechanic, a mere working mason; if he possesses some knowledge of these, he may venture to call himself an architect.</h6>
@@ -197,5 +142,3 @@ A lawyer without history or literature is a mechanic, a mere working mason; if h
   </script>
 </body>
 </html>
-
-

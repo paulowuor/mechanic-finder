@@ -96,8 +96,9 @@
 
 <body>
 	<h1 >Mechanic Finder Application</h1>
-	<a href="registration.php">create account</a>
-	
+	<a href="registration.php"></a>
+	<a href="login.php">User</a>
+		<a href="admin_register.php">Admin</a>
 	<footer class="footer">
 		<h6 style="text-align: center;">The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
 A lawyer without history or literature is a mechanic, a mere working mason; if he possesses some knowledge of these, he may venture to call himself an architect.</h6>

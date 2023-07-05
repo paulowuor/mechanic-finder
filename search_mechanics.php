@@ -1,7 +1,10 @@
 
+
+ 
  <?php
     require('db.php');
-     session_start();
+ 
+     include("auth_session1.php");
     ?>
 <!DOCTYPE html>
 <html>
@@ -83,7 +86,7 @@
     h1{
   
       text-align: center;
-      color: white;
+      color: gold;
       font-weight: bold;
 
     }
@@ -93,6 +96,7 @@
         background-color: #f2f2f2;
         padding: 5px 40px;
         border-radius: 40px;
+        margin-left: 40%;
     }
     .search-box{
         margin-bottom: 10px;
@@ -101,9 +105,9 @@
       margin-left: 90%;
       background-color: green;
     }
-    .profile-update{
-       margin-left: 1%;
-      margin-right: 60%;
+    .table-search{
+      margin-left: 30%;
+      margin-right: 30%;
     }
   </style>
 </head>
@@ -112,74 +116,92 @@
   <h1 >Mechanic Finder Application</h1>
    <div class="form">
         <div class="profile">
-        <p class="dashboard-text">Hey, <?php echo $_SESSION['username']; ?>!</p>
+        <p class="dashboard-text">Hey, <?php echo $_SESSION['name']; ?>!</p>
         <p class="dashboard-link"><a href="login.php">Logout</a></p>
        </div>
        
         <!-- User Features -->
-        <h2 class="dashboard-subtitle" style="color:white;">User Dashboard</h2>
+        <h2 class="dashboard-subtitle" style="color:gold;">User Dashboard</h2>
         <ul class="dashboard-list">
             
             <li><a href="update_profile.php">Update profile information</a></li>
                   
         </ul>
-        
+      
         
     </div>
-    <?php
-  $sql = "SELECT * FROM users";
-  $query_run = mysqli_query($con, $sql);
+<?php
+// check if the form is submitted
+if (isset($_GET['search'])) {
+  // sanitize the search query to prevent SQL injection
+  $search_query = mysqli_real_escape_string($con, $_GET['search']);
 
+  // construct the SQL query to search for users
+  $sql = "SELECT * FROM mechanics WHERE username LIKE '%{$search_query}%' OR email LIKE '%{$search_query}%' OR phonenumber LIKE '%{$search_query}%' OR cv LIKE '%{$search_query}%'";
+
+  // execute the query
+  $query_run = mysqli_query($con, $sql);
+} else {
+  // display all users if the search form is not submitted
+  $sql = "SELECT * FROM mechanics";
+  $query_run = mysqli_query($con, $sql);
+}
 ?>
 
 <!-- display the search form and the table of users -->
+<form action="" method="GET">
+  <input type="text" class="search-box" name="search" placeholder="Search">
+</form>
 
-<table border="1" class="profile-update" style="background-color: white;">
-  <thead class="table-dark">
+<table border="1" class="table-search" style="background-color: white;">
+  <thead>
     <tr>
       <th>username</th>
       <th>email</th>
-    
-     
-      
-      <th>Edit information</th>
-      <th>Delete Account</th>
+      <th>phonenumber</th>
+      <th>cv</th>
+      <th>Book Appointment</th>
     </tr>
   </thead>
   <tbody>
     <?php
-    if (mysqli_num_rows($query_run) > 0) {
-      while ($row = mysqli_fetch_array($query_run)) {
-    ?>
-        <tr>
-          <td><?php echo $row['name']; ?></td>
-          <td><?php echo $row['email']; ?></td>
-          
-        
-        
-          <td>
-            <form action="update.php" method="POST">
-              <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-              <input type="submit" name="update" class="btn btn-success" value="EDIT">
-            </form>
-          </td>
-          <td>
-            <form action="delete.php" method="POST">
-              <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-              <input type="submit" name="delete" class="btn btn-danger" value="DELETE">
-            </form>
-          </td>
-        </tr>
+    if ($query_run) {
+      if (mysqli_num_rows($query_run) > 0) {
+        while ($row = mysqli_fetch_array($query_run)) {
+          ?>
+          <tr>
+            <td><?php echo $row['username']; ?></td>
+            <td><?php echo $row['email']; ?></td>
+            <td><?php echo $row['phonenumber']; ?></td>
+           <td>
+  <?php
+  $cvData = $row['cv']; // Retrieve the CV data from the current row
+  $cvName = basename($cvData); // Extract the filename from the file path
+
+  echo '<a href="'.$cvData.'" target="_blank">'.$cvName.'</a>'; // Display the CV as a clickable link
+  ?>
+</td>
+
+            <td>
+              <form action="#" method="POST">
+                <input type="hidden" name="nationalID" value="<?php echo $row['nationalID'] ?>">
+                <input type="submit" name="update" class="btn btn-success" value="Book">
+              </form>
+            </td>
+          </tr>
     <?php
+        }
+      } else {
+        // display a message if no records found
+        echo "<tr><td colspan='5'>No record found</td></tr>";
       }
-    }
-    else {
-      // display a message if no records found
-      echo "<tr><td colspan='7'>No record found</td></tr>";
+    } else {
+      echo "Error in executing the query: " . mysqli_error($con);
     }
     ?>
   </tbody>
 </table>
+
 
   <footer class="footer">
     <h6 style="text-align: center;">The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
@@ -197,5 +219,3 @@ A lawyer without history or literature is a mechanic, a mere working mason; if h
   </script>
 </body>
 </html>
-
-

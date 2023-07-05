@@ -21,49 +21,49 @@
     require('db.php');
     // When form submitted, insert values into the database.
 
-    if (isset($_REQUEST['name'])) {
+    if (isset($_REQUEST['username'])) {
         // removes backslashes
-        $name = stripslashes($_REQUEST['name']);
+        $username = stripslashes($_REQUEST['username']);
         //escapes special characters in a string
-        $name = mysqli_real_escape_string($con, $name);
+        $username = mysqli_real_escape_string($con, $username);
         $email    = stripslashes($_REQUEST['email']);
         $email    = mysqli_real_escape_string($con, $email);
         $password = stripslashes($_REQUEST['password']);
         $password = mysqli_real_escape_string($con, $password);
-        $create_datetime = date("Y-m-d H:i:s");
+        
         // Check if user already exists in the database
-    $query = "SELECT * FROM users WHERE email='$email'";
+    $query = "SELECT * FROM admin WHERE email='$email'";
     $result = mysqli_query($con, $query);
     if (mysqli_num_rows($result) > 0) {
         echo "<div class='form'>
               <h3>User already registered.</h3><br/>
-              <p class='link'>Click here to <a href='registration.php'>try again</a></p>
+              <p class='link'>Click here to <a href='admin_register.php'>try again</a></p>
               </div>";
     } else {
-        $query    = "INSERT into `users` (name, password, email, create_datetime)
-                     VALUES ('$name', '" . md5($password) . "', '$email', '$create_datetime')";
+        $query    = "INSERT into `admin` (username, password, email)
+                     VALUES ('$username', '" . md5($password) . "', '$email')";
         $result   = mysqli_query($con, $query);
         if ($result) {
             echo "<div class='form'>
                   <h3>You are registered successfully.</h3><br/>
-                  <p class='link'>Click here to <a href='login.php'>Login</a></p>
+                  <p class='link'>Click here to <a href='admin_login.php'>Login</a></p>
                   </div>";
         } else {
             echo "<div class='form'>
                   <h3>Required fields are missing.</h3><br/>
-                  <p class='link'>Click here to <a href='registration.php'>registration</a> again.</p>
+                  <p class='link'>Click here to <a href='admin_register.php'>registration</a> again.</p>
                   </div>";
         }}
     } else {
 ?>
     <form class="form" action="" method="post">
         <h3 class="login-title">Register Here</h3>
-        <input type="text" class="login-input" name="name" placeholder="Username" required />
+        <input type="text" class="login-input" name="username" placeholder="Username" required />
         <input type="text" class="login-input" name="email" placeholder="Email Adress" required>
         <input type="password" class="login-input" name="password" placeholder="Password" required>
         <input type="submit" name="submit" value="Register" class="login-button">
         
-        <p class="link"><a href="login.php">Click to Login</a></p>
+        <p class="link"><a href="admin_login.php">Click to Login</a></p>
     </form>
 <?php
     }
