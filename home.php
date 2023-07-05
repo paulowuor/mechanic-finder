@@ -7,20 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<style>
-		
-  /* Default styles */
-
-  /* Media query for screens smaller than 768px */
-  @media (max-width: 767px) {
-    /* Styles for smaller screens */
-  }
-
-  /* Media query for screens larger than 768px */
-  @media (min-width: 768px) {
-    /* Styles for larger screens */
-  }
-
-
 		body {
 			background-image: url(images/home.jpg);
 			background-repeat: no-repeat;
@@ -74,34 +60,57 @@
 			font-style: italic;
 			margin-bottom: 90%;
 		}
-		h1{
-	
-			
+
+		h1 {
 			color: white;
 			font-weight: bold;
-
+			text-align: center;
+			margin-top: 50px;
 		}
-		 .search-box {
-        display: flex;
-        align-items: center;
-        background-color: #f2f2f2;
-        padding: 5px 40px;
-        border-radius: 40px;
-    }
-    .search-box{
-        margin-bottom: 10px;
-    }
+
+		.search-box {
+			display: flex;
+			align-items: center;
+			background-color: #f2f2f2;
+			padding: 5px 40px;
+			border-radius: 40px;
+			margin-bottom: 10px;
+		}
+
+		.styled-select {
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			background-color: #f2f2f2;
+			border: 1px solid #ccc;
+			padding: 8px;
+			font-size: 16px;
+			width: 200px;
+			border-radius: 4px;
+		}
+
+		.styled-select:focus {
+			outline: none;
+			border-color: #0066ff;
+		}
 	</style>
 </head>
 
 <body>
-	<h1 >Mechanic Finder Application</h1>
-	<a href="registration.php"></a>
-	<a href="login.php">User</a>
-		<a href="admin_register.php">Admin</a>
+	<h1>Mechanic Finder Application</h1>
+	<div class="main-container">
+		<div class="search-box">
+			<select id="pageSelect" class="styled-select">
+				<option value="">Select an option</option>
+				<option value="login.php">User</option>
+				<option value="admin_register.php">Admin</option>
+			</select>
+		</div>
+	</div>
+
 	<footer class="footer">
-		<h6 style="text-align: center;">The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
-A lawyer without history or literature is a mechanic, a mere working mason; if he possesses some knowledge of these, he may venture to call himself an architect.</h6>
+		<h6>The expectations of life depend upon diligence; the mechanic that would perfect his work must first sharpen his tools.<br>
+			A lawyer without history or literature is a mechanic, a mere working mason; if he possesses some knowledge of these, he may venture to call himself an architect.</h6>
 		&copy;<em id="date"></em>Paul Owuor De Developer
 	</footer>
 
@@ -111,6 +120,13 @@ A lawyer without history or literature is a mechanic, a mere working mason; if h
 		$(document).ready(function() {
 			var date = new Date().getFullYear();
 			$("#date").text(date);
+		});
+
+		document.getElementById("pageSelect").addEventListener("change", function() {
+			var selectedOption = this.value;
+			if (selectedOption !== "") {
+				window.location.href = selectedOption;
+			}
 		});
 	</script>
 </body>
