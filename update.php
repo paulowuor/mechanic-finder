@@ -18,7 +18,7 @@
     $query_run = mysqli_query($con, $query);
     if ($query_run) {
       echo '<script> alert("Data Updated"); </script>';
-      header("location:update_profile.php");
+      header("location:dashboard.php");
       exit;
     } else {
       echo '<script> alert("Data Not Updated"); </script>';

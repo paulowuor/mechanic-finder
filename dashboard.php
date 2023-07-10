@@ -122,7 +122,7 @@
         <h2 class="dashboard-subtitle" style="color:gold;">User Dashboard</h2>
         <ul class="dashboard-list">
             
-            <li><a href="update_profile.php">Update profile information</a></li>
+            <li><a href="update_profile.php">Account Settings</a></li>
                   
         </ul>
       

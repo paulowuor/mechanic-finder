@@ -47,7 +47,8 @@
         <input type="text" class="login-input" name="name" placeholder="Username" autofocus="true"/>
         <input type="password" class="login-input" name="password" placeholder="Password"/>
         <input type="submit" value="Login" name="submit" class="login-button"/>
-        <p class="link"><a href="registration.php">Create Account</a></p>
+        <p class="link"><a href="reset_password.php">Forgot Password</a></p>
+          <p class="link"><a href="registration.php">Create Account</a></p>
   </form>
 <?php
     }
